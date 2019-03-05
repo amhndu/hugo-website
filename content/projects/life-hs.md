@@ -2,6 +2,7 @@
 title="life.hs"
 date="2017-01-12"
 description="A dead-simple Conway's Game of Life simulation written in Haskell."
+tags=["haskell"]
 +++
 
 A dead-simple simulator for Conway's Game of Life in Haskell.

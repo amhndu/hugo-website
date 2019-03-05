@@ -2,6 +2,7 @@
 title="Mini Tanks"
 date="2014-04-26"
 description="A multi-player, turn-based, artillery game where you destroy other tanks to win in a fully destructible, procedurally generated terrain"
+tags=["sfml", "game", "c++"]
 +++
 
 A turn-based, artillery game where you destroy other tanks to win in a fully destructible, procedurally generated terrain. Supports multiplayer with upto 8 local players.

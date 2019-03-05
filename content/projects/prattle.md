@@ -2,6 +2,7 @@
 title="Prattle"
 description="Prattle is a messaging system, made in C++."
 date="2016-11-04"
+tags=["sfml", "c++", "networking"]
 +++
 
 ![Prattle Logo](https://raw.githubusercontent.com/TheIllusionistMirage/Prattle/master/Client/resources/images/prattle-logo.png)  

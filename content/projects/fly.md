@@ -1,10 +1,12 @@
 +++
 title="Fly"
 date="2017-07-28"
-tags=["sfml", "opengl", "c++"]
+tags=["sfml", "opengl", "c++", "game"]
 description="A flight simulator in OpenGL and C++, with an infinite procedurally generated terrain and explosions!"
 +++
 
+Screenshots
+------------
 ![fly-screenshot](/screenshots/fly-screenshot.png)
 ![collision gif](https://thumbs.gfycat.com/CharmingFastCoqui-size_restricted.gif)
 

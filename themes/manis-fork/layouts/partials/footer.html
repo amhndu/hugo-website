@@ -11,13 +11,13 @@
 					{{ . | safeHTML }}
 					{{ end }}
 					{{ with .Site.Params.LicenseURL }}
-					| <a href="{{.}}">{{ T "license" }}</a>
+					| <a href="{{.}}">License</a>
 					{{ end }}
 				</p>
 				{{ if ne .Kind "home" }}
 				<a href="#brand">
 					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
-					<span>{{ T "toUp" }}</span>
+					<span>Up</span>
 				</a>
 				{{ end }}
 			</div>
