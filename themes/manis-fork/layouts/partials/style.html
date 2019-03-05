@@ -1,0 +1,20 @@
+<style>
+	a { color: {{ .Site.Params.ColorTheme }}; }
+    button, input[type="submit"] {
+        background: {{ .Site.Params.ColorTheme }};
+        color: {{ .Site.Params.AltColor }};
+        border: 0px;
+    }
+	blockquote {
+		border-left-color: {{ .Site.Params.ColorTheme }};
+		border-right-color: {{ .Site.Params.ColorTheme }}; }
+	.bar a:hover {
+		color: {{ .Site.Params.ColorTheme }};
+		text-decoration: none; }
+	.sep {
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+		margin-left:0;
+		width: 24rem;
+		border-top: 2px solid {{ .Site.Params.ColorTheme }}; }
+</style>

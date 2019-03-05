@@ -1,0 +1,6 @@
+{{ partial "header" . }}
+<article>
+    {{ partial "title" . }}
+    {{ with .Content }}{{.}}{{ end }}
+</article>
+{{ partial "footer" . }}

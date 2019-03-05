@@ -1,0 +1,19 @@
+{{ partial "header" . }}
+<article>
+	<header>
+		{{ partial "title" . }}
+	</header>
+    <h2>Open Source Contributions</h2>
+	<ul class="no-bullet">
+	    {{ range (index .Sections 0).Pages }}
+            {{ partial "open-source-li" . }}
+	    {{ end }}
+	</ul>
+    <h2>Projects</h2>
+	<ul class="no-bullet">
+	    {{ range .Pages }}
+            {{ partial "projects-li" . }}
+	    {{ end }}
+	</ul>
+</article>
+{{ partial "footer" . }}

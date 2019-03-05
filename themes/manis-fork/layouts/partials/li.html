@@ -1,0 +1,5 @@
+<li>
+	{{ $dateformat := .Site.Params.DateFmt | default "Unknown" }}
+	<span><time datetime="{{.Date}}">{{ .Date.Format $dateformat }}</time></span>
+	<a href="{{ .RelPermalink }}">{{ .Title }}</a>
+</li>
