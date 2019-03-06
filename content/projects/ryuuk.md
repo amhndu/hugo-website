@@ -11,6 +11,9 @@ Currently Ryuuk runs only in POSIX compliant environments only.
 
 ## Building
 
+[GitHub](https://github.com/amhndu/ryuuk)
+
+
 **nix**
 ```
 $ git clone https://github.com/amhndu/ryuuk

@@ -30,6 +30,9 @@ Examples of games that have been tested to run (but NOT limited to):
 [Here's](https://gist.github.com/amhndu/5b6da39ee06959d93dc706a0b165fb80) a big list of games that match the supported specs from SimpleNES.  
 (Unlike the list above, these aren't tested. Some may or may not work)
 
+Source
+----------
+[GitHub](https://github.com/amhndu/SimpleNES)
 
 Screenshots
 ------------------------

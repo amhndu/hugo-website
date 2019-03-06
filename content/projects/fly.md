@@ -5,6 +5,10 @@ tags=["sfml", "opengl", "c++", "game"]
 description="A flight simulator in OpenGL and C++, with an infinite procedurally generated terrain and explosions!"
 +++
 
+Source
+----------
+[GitHub](https://github.com/amhndu/fly)
+
 Screenshots
 ------------
 ![fly-screenshot](/screenshots/fly-screenshot.png)

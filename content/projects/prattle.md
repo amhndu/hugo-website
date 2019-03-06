@@ -6,7 +6,7 @@ tags=["sfml", "c++", "networking"]
 +++
 
 ![Prattle Logo](https://raw.githubusercontent.com/TheIllusionistMirage/Prattle/master/Client/resources/images/prattle-logo.png)  
-Prattle is a simple chat program with a Client-Server architecture, a collaboration with [Koushtav Chakrabarty](http://fleptic.eu).  
+Prattle is a simple chat program with a Client-Server architecture, a collaboration with [Koushtav Chakrabarty](//koushtav.me).  
 Programmed with C++11 with the [SFML](http://www.sfml-dev.org/) library for graphics and [TGUI](http://tgui.eu) as the GUI framework.  
 
 Screenshots

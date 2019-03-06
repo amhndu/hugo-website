@@ -9,6 +9,8 @@ A dead-simple simulator for Conway's Game of Life in Haskell.
 
 <script id="asciicast-JhfMNFYTlr4SdtDFvOO2yFecv" src="https://asciinema.org/a/JhfMNFYTlr4SdtDFvOO2yFecv.js" async></script>
 
+Source: [GitHub](https://github.com/amhndu/life.hs)
+
 Compiling:
 ```
 $ ghc --make life.hs
