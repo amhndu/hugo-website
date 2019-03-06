@@ -30,6 +30,8 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/{{- . -}}.min.js"></script>
 		{{ end }}
 		{{ end }}
-
+        {{ if .Site.Params.GoogleVerification }}
+          <meta name="google-site-verification" content="{{ .Site.Params.GoogleVerification }}" />
+        {{ end }}
 		{{ partial "style" . }}
 	</head>
