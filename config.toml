@@ -21,7 +21,7 @@ pygmentsCodeFences = true
 
 [params]
 	# If false, use minified CSS (ui.min.css)
-	debugCSS = false
+	debugCSS = true
 	# Custom CSS
 	customCSS = []
 
@@ -43,7 +43,7 @@ pygmentsCodeFences = true
 	sub404 = "Back to <a href='/'>Home</a>."
 
 	# Color of your website's accent
-	colorTheme = "#3034ff"
+	colorTheme = "#8661C1"
     altColor = "#fff"
 	# Maximum number of item in Latest Posts or Works
 	latestCount = 3

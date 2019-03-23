@@ -2,5 +2,6 @@
 <article>
     {{ partial "title" . }}
     {{ with .Content }}{{.}}{{ end }}
+    {{ partial "social" . }}
 </article>
 {{ partial "footer" . }}

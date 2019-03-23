@@ -1,8 +1,9 @@
+        {{ if ne .Kind "home" }}
 			<hr class="sep" />
+        {{ end }}
 		</main>
 		<footer class="container no-print">
 			<div class="u-footer">
-				{{ partial "social.html" . }}
 				<p>
 					{{ if .Site.Params.themeAttrib | default true }}
 					{{ T "usedTheme" }} <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
