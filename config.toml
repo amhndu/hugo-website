@@ -44,7 +44,7 @@ pygmentsCodeFences = true
 
 	# Color of your website's accent
 	colorTheme = "#8661C1"
-    altColor = "#fff"
+        altColor = "#fff"
 	# Maximum number of item in Latest Posts or Works
 	latestCount = 3
 	# Path to site's favicon image
@@ -55,6 +55,6 @@ pygmentsCodeFences = true
 	# Social Links
 	email = "amhndu@gmail.com"
 	github = "https://github.com/amhndu/"
-    linkedIn = "https://www.linkedin.com/in/amish-naidu/"
+        linkedIn = "https://www.linkedin.com/in/amish-naidu/"
 
-    googleVerification = "-NGNp__dGrBzLzPX58fes-_QfgVl3athbCA73hpr290"
+        googleVerification = "-NGNp__dGrBzLzPX58fes-_QfgVl3athbCA73hpr290"
