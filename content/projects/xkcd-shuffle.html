@@ -45,7 +45,7 @@ description="xkcd shuffle aims to fix the random button in xkcd. Browse xkcd in 
     {
       document.getElementById('intro').style.display = 'none';
     }
-    fetch("https://xkcd.now.sh/",
+    fetch("https://xkcd.now.sh/?comic=latest",
         function(){
           total_comics = comic_data.num;
           if (total_comics > limit)
@@ -185,7 +185,7 @@ description="xkcd shuffle aims to fix the random button in xkcd. Browse xkcd in 
         if (current_index >= limit) current_index = 0;
       } while (comic_list[current_index] > total_comics)
     }
-    var url = "https://xkcd.now.sh/" +
+    var url = "https://xkcd.now.sh/?comic=" +
               comic_list[current_index];
     xcontainer.style.display = 'none';
     message_div.style.display = 'block';
