@@ -12,7 +12,7 @@
         <hr class="list-sep" />
     <h2>Projects</h2>
 	<ul class="no-bullet">
-	    {{ range .Pages }}
+	    {{ range .RegularPages }}
             {{ partial "projects-li" . }}
 	    {{ end }}
 	</ul>

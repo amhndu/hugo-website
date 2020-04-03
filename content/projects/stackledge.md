@@ -4,8 +4,6 @@ date="2017-11-30"
 description="A content-aggregator/reddit clone"
 +++
 
-# Stackledge
-
 A reddit clone.
 
 * Upvote/downvote based content aggregation
