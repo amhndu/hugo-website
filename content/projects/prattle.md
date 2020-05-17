@@ -1,6 +1,6 @@
 +++
 title="Prattle"
-description="Prattle is a messaging system, made in C++."
+description="Prattle is an instant messaging system, made in C++."
 date="2016-11-04"
 tags=["sfml", "c++", "networking"]
 +++

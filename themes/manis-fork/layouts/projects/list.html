@@ -3,17 +3,17 @@
 	<header>
 		{{ partial "title" . }}
 	</header>
-    <h2>Open Source Contributions</h2>
-	<ul class="no-bullet">
-	    {{ range (index .Sections 0).Pages }}
-            {{ partial "open-source-li" . }}
-	    {{ end }}
-	</ul>
-        <hr class="list-sep" />
     <h2>Projects</h2>
 	<ul class="no-bullet">
 	    {{ range .RegularPages }}
             {{ partial "projects-li" . }}
+	    {{ end }}
+	</ul>
+        <hr class="list-sep" />
+    <h2>Open Source Involvement</h2>
+	<ul class="no-bullet">
+	    {{ range (index .Sections 0).Pages }}
+            {{ partial "open-source-li" . }}
 	    {{ end }}
 	</ul>
 </article>

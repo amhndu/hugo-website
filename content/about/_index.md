@@ -3,7 +3,7 @@ title="About"
 menu="main"
 +++
 
-I'm currently working as a Software Engineer Intern at [PaveAI](https://www.paveai.com/), working on low-latency backend with Rust.
+I'm currently working as a Software Engineer at [PaveAI](https://www.paveai.com/), working on low-latency backend with Rust.
 
 I'm also pursuing my Bachelor's in Computer Science at IIIT Jabalpur.  
 
