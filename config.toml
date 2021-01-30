@@ -3,7 +3,7 @@ title = "Amish K. Naidu"
 theme = "manis-fork"
 
 # Copyright notice. Note: You can use HTML tag here
-copyright = "&copy; 2019 Amish K. Naidu"
+copyright = "&copy; 2021 Amish K. Naidu"
 pluralizeListTitles = false
 
 # Minimum number of posts before paginate navigation show up
@@ -53,8 +53,8 @@ pygmentsCodeFences = true
 	dateFmt = "Jan 02, 2006"
 
 	# Social Links
-	email = "amhndu@gmail.com"
-	github = "https://github.com/amhndu/"
-        linkedIn = "https://www.linkedin.com/in/amish-naidu/"
+    email = "amhndu@gmail.com"
+    github = "https://github.com/amhndu/"
+    linkedIn = "https://www.linkedin.com/in/amish-naidu/"
 
-        googleVerification = "-NGNp__dGrBzLzPX58fes-_QfgVl3athbCA73hpr290"
+    googleVerification = "-NGNp__dGrBzLzPX58fes-_QfgVl3athbCA73hpr290"
