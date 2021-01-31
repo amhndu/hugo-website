@@ -13,7 +13,7 @@ We can do better! With this one weird trick. (I'm sorry about the title, I could
 
 A lot of times you can just compose serde's existing deserializers much the same way it allows you to serialize.
 This is especially useful if you already have a conversion from another type.
-For the purpose of an example, let's try writing a serializer for `std::net::IpAddr` even
+For the purpose of an example, let's try writing a serializer for `std::net::IpAddr`, assume for a moment serde doesn't support it out of the box.
 
 ```rs
 #[derive(Deserialize)]
