@@ -3,13 +3,8 @@ title="About"
 menu="main"
 +++
 
-I'm currently working as a Software Engineer at [PaveAI](https://www.paveai.com/), writing Rust and Python
+I'm currently working as a Software Engineer, writing Rust and Python.
+I enjoy solving problems and building software that are both pragmatic yet elegant. 
+You can find my projects and contributions [here](/projects/) and the handful of posts I've written [here](/blog/). 
 
-I [build](/projects/) things and once in a blue moon I try to [write](/blog/).
-
-I know you are dying to know my editor and operating system preferences, so let's cut to the chase:
-vim and Arch with [KDE/Plasma](https://kde.org/plasma-desktop) is my weapon of choice.  
-
-When I'm not programming, I play Table Tennis, watch anime
-(I'm especially a fan of KyoAni productions, Hunter x Hunter, the Monogatari series and Fate/Zero. I'm always watching a few seasonals!) or listen to music
-
+[Contact me]({{< ref "/#contact" >}} "Contact Me") if you'd like to hire me!
