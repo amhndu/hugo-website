@@ -1,5 +1,5 @@
 baseURL = "https://amish.naidu.dev"
-title = "Amish K. Naidu"
+title = "Amish Kumar Naidu"
 theme = "manis-fork"
 
 # Copyright notice. Note: You can use HTML tag here
@@ -26,7 +26,7 @@ pygmentsCodeFences = true
 	customCSS = []
 
 	# Site meta description
-	description = "Amish Naidu's homepage. Find his projects and blog here"
+	description = "Amish Kumar Naidu's homepage. Find his projects and blog here"
 	# Site's Tagline (Subtitle or Keyword)
 	tagline = "Turning coffee into code"
 	# If true give attribution to this theme

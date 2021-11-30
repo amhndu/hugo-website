@@ -1,5 +1,5 @@
 +++
-title="Amish K. Naidu"
+title="Amish Kumar Naidu"
 +++
 [![computer.png](computer.png)](https://xkcd.com/722/)
 
