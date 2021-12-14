@@ -3,6 +3,7 @@ title="SimpleNES"
 date="2016-12-08"
 description="SimpleNES is an NES emulator hacked together for nothing but fun and nostalgia. Play (some of) your favorite games from NES!"
 tags=["sfml", "c++", "emulator"]
+weight="1"
 +++
 
 

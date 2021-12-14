@@ -2,7 +2,7 @@
 title="SeiyuuList"
 date="2020-03-22"
 tags=["react", "seiyuu"]
-description="Search anime voice actors and browse all of their character roles. Unlike the pages from anilist/MAL, SeiyuuList gives you more information on the anime alongside the character, allowing you to sort the list however you want. Thus you won't get lost reading the super-long lists of popular seiyuus."
+description="A frontend for anilist that allows you to search anime voice actors and browse all of their character roles. Made in React. Unlike the pages from anilist/MAL, this gives you more information on the anime alongside the character, allowing you to sort the list however you want. Thus you won't get lost reading the super-long lists of popular seiyuus."
 +++
 
 A better seiyuu list.

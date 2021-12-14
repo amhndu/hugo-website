@@ -2,7 +2,8 @@
 title="Fly"
 date="2017-07-28"
 tags=["sfml", "opengl", "c++", "game"]
-description="A flight simulator in OpenGL and C++, with an infinite procedurally generated terrain and explosions!"
+description="A flight simulator in OpenGL 3.2 and Modern C++, with an infinite procedurally generated terrain and explosions!"
+weight="1"
 +++
 
 Source

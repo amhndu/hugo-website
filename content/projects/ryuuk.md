@@ -1,7 +1,7 @@
 +++
 title="Ryuuk"
 date="2017-05-11"
-description="Ryuuk is a simple concurrent webserver written in C++17 and bsd sockects."
+description="Ryuuk is a concurrent HTTP webserver written in C++17 and bsd sockects."
 tags=["sfml", "c++", "networking"]
 +++
 

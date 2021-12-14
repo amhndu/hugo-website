@@ -2,7 +2,7 @@
 title="Gravity"
 date="2014-09-17"
 tags=["sfml", "game", "c++"]
-description="A survial game set in space, you are in a space station orbiting Earth but things have gone awry and you have a situation with broken satellites"
+description="A survial game set in space, you are in a space station orbiting Earth but things have gone wrong and you have a situation with broken satellites. How long can you survive?"
 +++
 
 ## An Orbital survival game

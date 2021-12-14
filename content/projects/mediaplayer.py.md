@@ -1,6 +1,6 @@
 +++
 title = "mediaplayer.py"
-date = "2019-03-06T01:05:36+05:30"
+date = "2015-06-11"
 description = "A script to control or extract info from media players"
 +++
 
