@@ -57,5 +57,5 @@ The following images have been taken from [here][orbital debris]
 
 Other than the above no rights have been reserved, but in the unlikely event that you use anything, please drop me a [mail][mailaddr].
 
-[orbital debris]: http://www.allworkallplay.org/games/orbitaldebris/
+[orbital debris]: https://web.archive.org/web/20150717114053/http://www.allworkallplay.org/blog/orbital-debris-making-an-html5-game-with-phaser/
 [repo]: https://github.com/amhndu/gravity
