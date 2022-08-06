@@ -3,7 +3,7 @@ title = "Amish Kumar Naidu"
 theme = "manis-fork"
 
 # Copyright notice. Note: You can use HTML tag here
-copyright = "&copy; 2021 Amish K. Naidu"
+copyright = "&copy; 2022 Amish K. Naidu"
 pluralizeListTitles = false
 
 # Minimum number of posts before paginate navigation show up
@@ -11,6 +11,8 @@ paginate = 10
 
 # Edit this if you want to translate your blog
 defaultContentLanguage = "en"
+
+disableHugoGeneratorInject = true
 
 # Code Highlighting (Chroma)
 pygmentsCodeFences = true
@@ -44,7 +46,7 @@ pygmentsCodeFences = true
 
 	# Color of your website's accent
 	colorTheme = "#8661C1"
-        altColor = "#fff"
+    altColor = "#fff"
 	# Maximum number of item in Latest Posts or Works
 	latestCount = 3
 	# Path to site's favicon image
