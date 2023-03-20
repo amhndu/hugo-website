@@ -16,7 +16,7 @@ disableHugoGeneratorInject = true
 
 # Code Highlighting (Chroma)
 pygmentsCodeFences = true
-#pygmentsUseClasses = true
+pygmentsUseClasses = true
 
 [taxonomies]
 	tag = "tags"
