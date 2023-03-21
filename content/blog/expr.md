@@ -33,11 +33,11 @@ In the simplest sense, we build an expression interpreter. We can break down the
 
 Parsers (like in a compiler) convert characters to an internal representation, generally the Parse Tree or an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree).
 
-Consider an expression `x * (x - 1)`, made up of: the constant `1`, the variable `x` and some binary operations on them. We can represent this as an expression tree, which is much easier to use in algorithms, than a sequence of characters.
+Consider an expression `x * (x - 1)` made up of: the constant `1`, the variable `x` and some binary operations on them. We can represent this as an expression tree, which is much easier to use in algorithms.
 
 ![expr-tree.png](expr-tree.png)
 
-The variable and constants become the leaves, and operations combine sub-trees. Let's define the expression tree:
+The variable and constants become the leaves, and operations allows us to compose the nodes. Let's define the expression tree:
 
 ```py
 # expr/nodes.py
@@ -48,7 +48,7 @@ class Node(ABC):
         Base class of the AST
     """
 ```
-`Node` serves as the [Abstract Base Class](https://docs.python.org/3/library/abc.html) of the tree nodes. Looks rather empty now, but we'll soon extend the interface as well as add common behaviour.
+`Node` serves as the [Abstract Base Class](https://docs.python.org/3/library/abc.html) of the tree nodes. Looks rather empty now, but we'll be extending it soon.
 
 Let's add the concrete nodes:
 
@@ -85,9 +85,9 @@ class BinaryOperation(Node):
 
 We make use of [dataclasses](https://docs.python.org/3/library/dataclasses.html) to free us from some boilerplate. Note how `BinaryOperation` contains two arbitrary nodes, this allows to represent any expressions built using binary operations with an arbitrary depth.
 
-If we were building a compiler, we'd have the job of building a full parser that reads characters creates the syntax tree, thankfully, we are not. We are working in the confines of Python, we can leverage it's features.
+If we were building a compiler, we'd have the job of building a full parser that reads characters and creates the syntax tree, thankfully, we are not. We are working in the confines of Python, we can leverage it's features.
 
-Consider the python expression `x + 1` The interpreter invokes the `add` [dunder method](https://docs.python.org/3/reference/datamodel.html#object.__add__) of the first operand, note that the language doesn't impose any constraint on what we can return. Instead of just returning a numerical value, we can return an object that encapsulates the operation and can be evaluated lazily. We will use operator overloading to create the expression tree.
+Consider the python expression `x + 1` - the interpreter invokes the `add` [dunder method](https://docs.python.org/3/reference/datamodel.html#object.__add__) of the first operand to evaluate it. Note that the language doesn't impose any constraint on what should be returned. Instead of just returning a numerical value, we can return an object that encapsulates the operation and can be evaluated lazily. We will use operator overloading to create the expression tree.
 
 Let's add this to our base `Node` class. We'll start simple and support just addition, subtraction and multiplication. You are of course free to extend this later (eg. with power, or division operation)!
 ```py
@@ -116,16 +116,20 @@ def _node_or_constant(val: Node | float) -> Node:
     return Constant(constant=val)
 ```
 
-Let's try it!
+Let's test this.
 
 ```py
 from expr.nodes import Variable
 
 X = Variable(0)
 print(X)
+# Variable(index=0)
 print(X + X)
+# BinaryOperation(operator=<add>, left=Variable(index=0), right=Variable(index=0))
 print(X - 1)
+# BinaryOperation(operator=<sub>, left=Variable(index=0), right=Constant(constant=1))
 print(X * (X - 1))
+# BinaryOperation(operator=<mul>, left=Variable(index=0), right=BinaryOperation(operator=<sub>, left=Variable(index=0), right=Constant(constant=1)))
 ```
 
 We are halfway there!
