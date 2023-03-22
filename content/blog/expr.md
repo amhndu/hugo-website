@@ -3,8 +3,9 @@ title = "Building an auto-differentiator and re-inventing lambdas in Python"
 date = "2023-03-18"
 +++
 
+We discuss a technique that can be used to build lazy operations in python and augment them with abilities like auto-differentiation! This has several applications, aside from being a curious way to re-invent lambdas. Laziness can help algebra libraries avoid intermediate results in a big expression and thus improve efficiency by avoiding unnecessary allocations. This is also widely used in machine-learning frameworks like TensorFlow or PyTorch, that let you build deep tensor expressions and magically take care of backpropagation. Numpy also does something similar where it lets you build an expression to index into a numpy array.
 
-Let's start with a teaser!
+Here's a teaser!
 
 ```py
 from expr import *
@@ -21,8 +22,6 @@ print(magic_lambda(7, evaluator=Differentiator()))
 # Derivate = 2*x - 1
 # 13
 ```
-
-You may have seen this magic if you've used a machine-learning framework like TensorFlow, which provide an auto-gradient feature for any tensor expressions you build. We discuss a technique that can be used to build lazy operations in python. Laziness also help algebra libraries to avoid intermediate results in a big expression to avoid unnecessary allocations and peform other optimizations.
 
 In the simplest sense, we build an expression interpreter. We can break down the process of evaluating an expression to two steps:
 
