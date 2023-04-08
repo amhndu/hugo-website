@@ -3,7 +3,9 @@ title = "Building an auto-differentiator and re-inventing lambdas in Python"
 date = "2023-03-18"
 +++
 
-We discuss a technique that can be used to build lazy operations in python and augment them with abilities like auto-differentiation! This has several applications, aside from being a curious way to re-invent lambdas. Laziness can help algebra libraries avoid intermediate results in a big expression and thus improve efficiency by avoiding unnecessary allocations. This is also widely used in machine-learning frameworks like TensorFlow or PyTorch, that let you build deep tensor expressions and magically take care of backpropagation. Numpy also does something similar where it lets you build an expression to index into a numpy array.
+This post explores a set of techniques that can be used to build lazy operations in python and build an auto-differentiator using a flexible interpreter framework.
+
+This has several applications, aside from being a curious way to re-invent lambdas, laziness can help algebra libraries avoid intermediate results in a big expression and improve efficiency by avoiding unnecessary allocations. This is also widely used in machine-learning frameworks like TensorFlow or PyTorch, that let you build deep tensor expressions and magically take care of backpropagation. Numpy also does something similar where it lets you build an expression to index into a numpy array.
 
 Here's a teaser!
 
@@ -23,20 +25,23 @@ print(magic_lambda(7, evaluator=Differentiator()))
 # 13
 ```
 
-In the simplest sense, we build an expression interpreter. We can break down the process of evaluating an expression to two steps:
+In the simplest sense, the goal is to build an expression interpreter. The process of evaluating an expression can be broken down into two steps:
 
 * Parsing - convert input characters to an internal *representation*
 * Interpretation - *interpret* the above representation to produce a value
 
-### Representation
+## Representation
 
-Parsers (like in a compiler) convert characters to an internal representation, generally the Parse Tree or an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree).
 
-Consider an expression `x * (x - 1)` made up of: the constant `1`, the variable `x` and some binary operations on them. We can represent this as an expression tree, which is much easier to use in algorithms.
+Consider an expression: `x * (x - 1)`
+
+We can break this into two sub-expressions, the inner `x - 1` and an outer `x * (y)` where `(y)` is the result/representation of the aforementioned inner expression. The binary operation `x - 1` can be further broken down into `x` (a variable) and `1` (a constant), both are just simpler expressions themselves. Notice how each binary operation is just composed of other expressions. Given this recursive nature, trees prove to be an efficient and convenient data structure, allowing arbitrary flexibility.
+
+Such trees are called Parse Tree or an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree) and are emitted by [parsers](https://en.wikipedia.org/wiki/Parsing) given a textual representation. The above expression can be visualized as follows:
 
 ![expr-tree.png](expr-tree.png)
 
-The variable and constants become the leaves, and operations allows us to compose the nodes. Let's define the expression tree:
+The tree is composed of a bunch of different types of nodes, which we represent using a base type:
 
 ```py
 # expr/nodes.py
@@ -47,9 +52,9 @@ class Node(ABC):
         Base class of the AST
     """
 ```
-`Node` serves as the [Abstract Base Class](https://docs.python.org/3/library/abc.html) of the tree nodes. Looks rather empty now, but we'll be extending it soon.
+`Node` here serves as the [Abstract Base Class](https://docs.python.org/3/library/abc.html) and encapsulates a *computation*. Looks rather empty now, but we'll be extending it soon.
 
-Let's add the concrete nodes:
+Let's add some concrete nodes for the different types of compuations we want to support:
 
 ```py
 # expr/nodes.py
@@ -82,13 +87,21 @@ class BinaryOperation(Node):
     right: Node
 ```
 
-We make use of [dataclasses](https://docs.python.org/3/library/dataclasses.html) to free us from some boilerplate. Note how `BinaryOperation` contains two arbitrary nodes, this allows to represent any expressions built using binary operations with an arbitrary depth.
+We make use of [dataclasses](https://docs.python.org/3/library/dataclasses.html) to free us from some python boilerplate.
 
-If we were building a compiler, we'd have the job of building a full parser that reads characters and creates the syntax tree, thankfully, we are not. We are working in the confines of Python, we can leverage it's features.
+We have the data structure, now how do we build it? If we were building a compiler, we'd have the job of building a full parser that reads characters and creates the syntax tree using something like a [parser generator](https://web.mit.edu/6.005/www/fa15/classes/18-parser-generators/) or writing an [RDP](https://en.wikipedia.org/wiki/Recursive_descent_parser). Thankfully, we can leverage the Python runtime and use operator overloading to do the magic.
 
-Consider the python expression `x + 1` - the interpreter invokes the `add` [dunder method](https://docs.python.org/3/reference/datamodel.html#object.__add__) of the first operand to evaluate it. Note that the language doesn't impose any constraint on what should be returned. Instead of just returning a numerical value, we can return an object that encapsulates the operation and can be evaluated lazily. We will use operator overloading to create the expression tree.
+#### Operator overloading
+When you use a binary operation in python, let's say
+```py
+print(42 + 1)
+```
+Python knows how to compute `42 + 1` since these are integers. What if we are working with custom objects? Python let's you define how to compute `my_special_object + my_other_object` using [operator overloading](https://en.wikipedia.org/wiki/Operator_overloading). The interpreter invokes the `add` [dunder method](https://docs.python.org/3/reference/datamodel.html#object.__add__) of the first operand.
 
-Let's add this to our base `Node` class. We'll start simple and support just addition, subtraction and multiplication. You are of course free to extend this later (eg. with power, or division operation)!
+Overloading is usually used to work with *values*, however, we want to deal not with *values* but *expressions*. Our expressions are themselves *objects*, and there is no rule saying operator overloading can only return numbers or values! We will use operator overloading to build the expression using operations on `Node`s.
+
+We'll start simple and support just addition, subtraction and multiplication. You are of course free to extend this later (eg. with power, or division operation)!
+
 ```py
 # expr/nodes.py
 from operator import add, sub, mul
@@ -131,17 +144,21 @@ print(X * (X - 1))
 # BinaryOperation(operator=<mul>, left=Variable(index=0), right=BinaryOperation(operator=<sub>, left=Variable(index=0), right=Constant(constant=1)))
 ```
 
-We are halfway there!
 
-### Interpretation
+## Interpretation
 
-Now that have our AST, it's time to do something useful with it. If we were to evaluate the tree, we start with the leaf, then go up, calculating the value for each subtree, until we have the value of the whole tree.
+Now that have our AST, it's time we do something useful with it. To evaluate the tree, we start with the leaf, then work our way up, calculating the value for each subtree, until we have the value of the whole tree.
 ![expr-interpret.png](expr-interpret.png)
 
-This looks like a depth-first traversal. However, unlike regular depth first search, the value of the different nodes are calculated differently. The simplest way to support is to simply add a method like `value(self) -> float` to our nodes and use Python's inheritance based polymorphism. What if you want to add a new type of traversal that calculates a different value? What if we want to add a tree printer? We would have to go back and extend the interface with an extra method, then add it to each node. If the different types of traversals are somewhat limited, this is a reasonable solution. However, it splits the logic into several places. So if were to implement a differentiator, we have to touch a bunch of different classes.
-Wouldn't it be better if we can group this logic based on the different type of traversal, rather than the type of node? This is the principle of high [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) and low [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming)).
+This looks like a depth-first traversal. However, to implement this, we need to calcualte the value of a depending on what *type* of node it is. A natural solution is to simply add a method `value(self) -> float` to our `Node` and have each node implement it differently, this is [dynamic dispatch](https://en.wikipedia.org/wiki/Dynamic_dispatch) and could work well for us basic use-case.
 
-[Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the resuce! This allows us to build different visitors, and each visitor contains all logic for a given type of traversal, without spilling responsibilities. The visitor interface has a separate method to *visit* each node.
+What if you want to add a new type of traversal that computes a different value? What if we want to add a tree printer? We would keep using basic polymorphism and and extend the `Node` interface with an extra method for each type of traversal. If the different types of traversals are somewhat limited, this is a reasonable solution. However, doing so splits the logic of a traversal into several places. So if were to implement a differentiator, we have to touch the base node interface, then each concrete nodes.
+
+If we go with the above appraoch, a single node would be a collection of different methods that have nothing to with each other and have low *coupling*. Wouldn't it be better if we can group this logic based on the different types of traversal, rather than the type of node? See also: the principle of *high [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) and low [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))*.
+
+What we want is a way to dispatch based on not just the type of node, but also the kind of traversal. This is called [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch) and some languages directly support it. Python and most non-functional languages don't.
+
+[Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the resuce! The idea is to build different visitors, and each visitor will contain all logic for a given type of traversal, without spilling *responsibilities*. The visitor interface has a separate method to visit each node.
 
 ```py
 # expr/visitor.py
@@ -166,7 +183,7 @@ class NodeVisitor(ABC):
         raise NotImplementedError
 ```
 
-The node interface is still used to dispatch on the type of node, however, it simply delegates to the right visit method in the visitor. We add an abstract method that accepts the visitor as an argument to our base Node, and the concrete Node will call the appropriate visit method.
+To make this work, we add an abstract method to the `Node` base class which will be implemented by each node, and will appropriately delegate to the right visit method of the visitor. This abstract method that accepts the visitor as an argument.
 
 ```py
 # expr.node.py
@@ -279,11 +296,13 @@ class Differentiator(NodeVisitor):
 
     def visit_binary_operation(self, node: BinaryOperation, *args) -> float:
         if node.operator == add or node.operator == sub:
+            # sum rule
             left_value = node.left.calculate(*args, visitor=self)
             right_value = node.right.calculate(*args, visitor=self)
             return node.operator(left_value, right_value)
 
         elif node.operator == mul:
+            # product rule and chain rule
             left_value = node.left.calculate(*args, visitor=self.value_visitor)
             left_derivate = node.left.calculate(*args, visitor=self)
             right_value = node.right.calculate(*args, visitor=self.value_visitor)
