@@ -162,7 +162,7 @@ For more information on metadata, see the [MPRIS v2 metadata guidelines](http://
 
 ### Conclusion
 
-Now, you should be able to make your own scripts or just use the interactive interpreter to control your media player. You can have a look at [mediaplayer.py](../Projects/source-code/mediaplayer.py), a python script I made which I use to print metadata in [conky](../Projects/conky-cards.html) and make keybindings for clementine, which I was unable to do through clementine itself. For more information, see the D-Bus and MPRIS specifications in the references section below.
+Now, you should be able to make your own scripts or just use the interactive interpreter to control your media player. You can have a look at [mediaplayer.py](https://github.com/amhndu/conky-cards/blob/master/mediaplayer.py), a python script I made which I use to print metadata in [conky](https://github.com/amhndu/conky-cards) and make keybindings for clementine, which I was unable to do through clementine itself. For more information, see the D-Bus and MPRIS specifications in the references section below.
 
 ### References
 
