@@ -5,7 +5,7 @@ date = "2023-03-18"
 
 This post explores a set of techniques that can be used to build lazy operations in python and build an auto-differentiator using a flexible interpreter framework.
 
-This has several applications, aside from being a curious way to re-invent lambdas, laziness can help algebra libraries avoid intermediate results in a big expression and improve efficiency by avoiding unnecessary allocations. This is also widely used in machine-learning frameworks like TensorFlow or PyTorch, that let you build deep tensor expressions and magically take care of backpropagation. Numpy also does something similar where it lets you build an expression to index into a numpy array.
+This has several applications, aside from being a curious way to re-invent lambdas, laziness can help linear-algebra libraries avoid intermediate results in a big expression and improve efficiency by avoiding unnecessary allocations. This is also widely used in machine-learning frameworks such as TensorFlow or PyTorch, that let you build deep tensor expressions and magically take care of backpropagation. Numpy also does something similar where it lets you build an expression to index into a numpy array.
 
 Here's a teaser!
 
@@ -150,15 +150,15 @@ print(X * (X - 1))
 Now that have our AST, it's time we do something useful with it. To evaluate the tree, we start with the leaf, then work our way up, calculating the value for each subtree, until we have the value of the whole tree.
 ![expr-interpret.png](expr-interpret.png)
 
-This looks like a depth-first traversal. However, to implement this, we need to calcualte the value of a depending on what *type* of node it is. A natural solution is to simply add a method `value(self) -> float` to our `Node` and have each node implement it differently, this is [dynamic dispatch](https://en.wikipedia.org/wiki/Dynamic_dispatch) and could work well for us basic use-case.
+This looks like a depth-first traversal. However, to implement this, we need to calculate the value of a node depending on what *type* of node it is. A natural solution is to simply add a method `value(self) -> float` to our `Node` and have each node implement it differently, this is [dynamic dispatch](https://en.wikipedia.org/wiki/Dynamic_dispatch) and could work well for our basic use-case.
 
-What if you want to add a new type of traversal that computes a different value? What if we want to add a tree printer? We would keep using basic polymorphism and and extend the `Node` interface with an extra method for each type of traversal. If the different types of traversals are somewhat limited, this is a reasonable solution. However, doing so splits the logic of a traversal into several places. So if were to implement a differentiator, we have to touch the base node interface, then each concrete nodes.
+What if you want to add a new type of traversal that computes a different value? What if we want to add a tree printer? We could keep using basic polymorphism and and extend the `Node` interface with an extra method for each type of traversal. If the different types of traversals are somewhat limited, this is a reasonable solution. However, doing so splits the logic of a traversal into several places. So if were to implement a differentiator, we have to touch the base node interface, then each concrete nodes.
 
-If we go with the above appraoch, a single node would be a collection of different methods that have nothing to with each other and have low *coupling*. Wouldn't it be better if we can group this logic based on the different types of traversal, rather than the type of node? See also: the principle of *high [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) and low [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))*.
+If we go with the above appraoch, a single node would be a collection of different methods that have nothing to with each other and have low *coupling*. Wouldn't it be better if we can group this logic based on the different types of traversal rather than the type of node? See also: the principle of *high [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) and low [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))*.
 
-What we want is a way to dispatch based on not just the type of node, but also the kind of traversal. This is called [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch) and some languages directly support it. Python and most non-functional languages don't.
+What we want is a way to dispatch based on not just the type of node, but also the kind of traversal, we need [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch). Some languages directly support it, python and most languages don't.
 
-[Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the resuce! The idea is to build different visitors, and each visitor will contain all logic for a given type of traversal, without spilling *responsibilities*. The visitor interface has a separate method to visit each node.
+[Visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) to the rescue! The idea is to build different visitors, and each visitor will contain all logic for a single type of traversal without spilling responsibilities.
 
 ```py
 # expr/visitor.py
@@ -182,6 +182,8 @@ class NodeVisitor(ABC):
     def visit_binary_operation(self, node: BinaryOperation, *args):
         raise NotImplementedError
 ```
+
+The visitor interface has a separate method to visit each node.
 
 To make this work, we add an abstract method to the `Node` base class which will be implemented by each node, and will appropriately delegate to the right visit method of the visitor. This abstract method that accepts the visitor as an argument.
 
